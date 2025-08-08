@@ -176,6 +176,7 @@ function CreatePlayerFrames()
             for rating = 1, 10 do
                 info.text = tostring(rating)
                 info.value = rating
+                info.checked = (rating == player.rating)
                 info.func = function()
                     UIDropDownMenu_SetSelectedValue(dropdown, rating)
                     player.rating = rating
@@ -185,8 +186,8 @@ function CreatePlayerFrames()
         end)
         
         -- Establecer valor por defecto
-        UIDropDownMenu_SetSelectedValue(dropdown, 5)
         player.rating = 5
+        UIDropDownMenu_SetSelectedValue(dropdown, 5)
         
         frame.ratingDropdown = dropdown
         table.insert(playerFrames, frame)
