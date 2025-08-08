@@ -9,6 +9,7 @@ core/Whitelist.lua
 core/Commands.lua
 core/ClassColors.lua
 core/Tooltip.lua
+core/LFGTooltips.lua
 
 # Data - Manejo de datos del grupo
 data/GroupData.lua
