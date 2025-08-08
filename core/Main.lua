@@ -17,8 +17,9 @@ frame:SetScript("OnEvent", function(self, event)
         InitializeDungeonRatingUI()
         InitializeTooltipSystem()
         InitializeLFGTooltipSystem()
+        InitializeDungeonDetectionSystem()
         
-        print("DEBUG: MyFirstAddon initialized successfully")
+        print("MyFirstAddon initialized successfully")
     end
 end)
 

@@ -10,6 +10,7 @@ core/Commands.lua
 core/ClassColors.lua
 core/Tooltip.lua
 core/LFGTooltips.lua
+core/DungeonDetection.lua
 
 # Data - Manejo de datos del grupo
 data/GroupData.lua

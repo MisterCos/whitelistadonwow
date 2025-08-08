@@ -31,7 +31,7 @@ function InitializeLFGTooltipSystem()
     end)
     
     -- Si la interfaz ya está cargada, hookear inmediatamente
-    if IsAddOnLoaded("Blizzard_LookingForGroupUI") then
+    if C_AddOns.IsAddOnLoaded("Blizzard_LookingForGroupUI") then
         HookLFGTooltips()
     end
 end
