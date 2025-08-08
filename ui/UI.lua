@@ -23,10 +23,16 @@ function ShowDungeonRatingFrame()
     -- Obtener jugadores del grupo actual (simulado para pruebas)
     currentGroupPlayers = GetCurrentGroupPlayers()
     
+    -- Obtener información de la dungeon actual
+    local dungeonInfo = GetCurrentDungeonInfo()
+    
     -- Crear la interfaz si no existe
     if not mainFrame then
         CreateMainFrame()
     end
+    
+    -- Actualizar el título con la información de la dungeon
+    UpdateModalTitle(dungeonInfo)
     
     -- Crear frames para cada jugador
     CreatePlayerFrames()
@@ -39,7 +45,7 @@ end
 function CreateMainFrame()
     -- Frame principal
     mainFrame = CreateFrame("Frame", "DungeonRatingFrame", UIParent, "BackdropTemplate")
-    mainFrame:SetSize(350, 320)
+    mainFrame:SetSize(450, 320)
     mainFrame:SetPoint("CENTER")
     mainFrame:SetBackdrop({
         bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
@@ -60,6 +66,7 @@ function CreateMainFrame()
     local title = mainFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     title:SetPoint("TOP", 0, -15)
     title:SetText("Rate Players")
+    mainFrame.title = title -- Guardar referencia al título
     
     -- Botón de cerrar
     local closeButton = CreateFrame("Button", nil, mainFrame, "UIPanelCloseButton")
@@ -88,7 +95,7 @@ function CreateMainFrame()
     
     -- Frame para la lista de jugadores (sin scroll)
     local playerContainer = CreateFrame("Frame", nil, mainFrame)
-    playerContainer:SetSize(330, 220)
+    playerContainer:SetSize(430, 220)
     playerContainer:SetPoint("TOP", 0, -50)
     
     -- Guardar referencias
@@ -123,7 +130,7 @@ function CreatePlayerFrames()
     
     for i, player in ipairs(currentGroupPlayers) do
         local frame = CreateFrame("Frame", "PlayerRatingFrame" .. i, playerContainer, "BackdropTemplate")
-        frame:SetSize(320, 40)
+        frame:SetSize(420, 40)
         frame:SetPoint("TOPLEFT", 5, yOffset)
         
         -- Fondo del frame
@@ -204,20 +211,43 @@ end
 function SaveRatings()
     local savedCount = 0
     
+    -- Obtener información de la dungeon actual
+    local dungeonInfo = GetCurrentDungeonInfo()
+    
     for _, player in ipairs(currentGroupPlayers) do
         if player.rating then
-            AddPlayerToWhitelist(player.name, player.rating, player.role)
+            AddPlayerToWhitelist(player.name, player.rating, player.role, dungeonInfo)
             savedCount = savedCount + 1
         end
     end
     
     if savedCount > 0 then
-        print("Ratings saved for " .. savedCount .. " players.")
+        local dungeonText = string.format(" - %s (%s)", dungeonInfo.name, dungeonInfo.difficulty)
+        print("Ratings saved for " .. savedCount .. " players" .. dungeonText .. ".")
     else
         print("No ratings were saved.")
     end
     
     HideRatingFrame()
+end
+
+-- Actualizar el título de la modal con información de la dungeon
+function UpdateModalTitle(dungeonInfo)
+    if not mainFrame or not mainFrame.title then
+        return
+    end
+    
+    local titleText = "Rate Players"
+    
+    if dungeonInfo and dungeonInfo.name and dungeonInfo.name ~= "Unknown" then
+        if dungeonInfo.isKey then
+            titleText = string.format("Rate Players - %s (%s)", dungeonInfo.name, dungeonInfo.difficulty)
+        else
+            titleText = string.format("Rate Players - %s (%s)", dungeonInfo.name, dungeonInfo.difficulty)
+        end
+    end
+    
+    mainFrame.title:SetText(titleText)
 end
 
 

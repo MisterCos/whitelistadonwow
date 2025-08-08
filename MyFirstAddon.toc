@@ -8,9 +8,11 @@ core/Main.lua
 core/Whitelist.lua
 core/Commands.lua
 core/ClassColors.lua
+core/Tooltip.lua
 
 # Data - Manejo de datos del grupo
 data/GroupData.lua
+data/DungeonData.lua
 
 # UI - Interfaz gráfica
 ui/UI.lua

@@ -4,10 +4,10 @@
 -- Función principal para obtener jugadores del grupo
 function GetCurrentGroupPlayers()
     -- Por ahora usamos la versión real, pero mantenemos la simulada comentada
-    -- return GetRealGroupPlayers()
+    return GetRealGroupPlayers()
     
     -- Versión simulada (comentada para pruebas)
-    return GetMockGroupPlayers()
+    -- return GetMockGroupPlayers()
 end
 
 -- Obtener jugadores reales del grupo actual

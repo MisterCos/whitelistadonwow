@@ -1,7 +1,7 @@
 -- whitelist.lua
 
 -- TODO: we have to add the rest of the information to the whitelist
-function AddPlayerToWhitelist(playerName,note,role)
+function AddPlayerToWhitelist(playerName, note, role, dungeonInfo)
    -- Inicializar jugador si no existe
    if not WhiteListDB[playerName] then
         WhiteListDB[playerName] = { dps = {}, healer = {}, tank = {} }
@@ -12,14 +12,18 @@ function AddPlayerToWhitelist(playerName,note,role)
 
     -- Validar rol
     if not WhiteListDB[playerName][role] then
-                        print("Invalid role: "..role)
+        print("Invalid role: "..role)
         return
     end
 
     -- Crear el nuevo encuentro
     local newEncounter = {
         date = date("%d/%m/%Y %H:%M:%S"),
-        note = note
+        note = note,
+        dungeon = dungeonInfo.name or "Unknown",
+        difficulty = dungeonInfo.difficulty or "Unknown",
+        keyLevel = dungeonInfo.keyLevel or 0,
+        isKey = dungeonInfo.isKey or false
     }
 
     -- Añadir el encuentro al final del array
@@ -30,23 +34,32 @@ function AddPlayerToWhitelist(playerName,note,role)
         return a.date > b.date -- Orden descendente (más reciente primero)
     end)
 
-            print("Encounter added for "..playerName.." - Role: "..role.." Rating: "..note)
+    -- Mostrar información de la dungeon en el mensaje
+    local dungeonText = dungeonInfo.isKey and 
+        string.format(" - %s (%s)", dungeonInfo.name, dungeonInfo.difficulty) or
+        string.format(" - %s (%s)", dungeonInfo.name, dungeonInfo.difficulty)
+    
+    print("Encounter added for "..playerName.." - Role: "..role.." Rating: "..note..dungeonText)
 end
 
 
-function removeWhiteList()
+function RemoveWhiteList()
     WhiteListDB = {}
 end
 
 
-function printWhiteList()
+function PrintWhiteList()
     for playerName, roles in pairs(WhiteListDB) do
         print("Player: "..playerName)
         for role, encounters in pairs(roles) do
             print("  Role: "..role)
             for i, encounter in ipairs(encounters) do
-                print(string.format("    %d - Date: %s, Rating: %d",
-                    i, encounter.date, encounter.note))
+                local dungeonText = ""
+                if encounter.dungeon and encounter.difficulty then
+                    dungeonText = string.format(", %s (%s)", encounter.dungeon, encounter.difficulty)
+                end
+                print(string.format("    %d - Date: %s, Rating: %d%s",
+                    i, encounter.date, encounter.note, dungeonText))
             end
         end
     end
