@@ -214,7 +214,11 @@ function SaveRatings()
     -- Obtener información de la dungeon actual
     local dungeonInfo = GetCurrentDungeonInfo()
     
+    print("DEBUG: Saving ratings for " .. #currentGroupPlayers .. " players")
+    
     for _, player in ipairs(currentGroupPlayers) do
+        print("DEBUG: Player: " .. player.name .. ", Role: " .. tostring(player.role) .. ", Rating: " .. tostring(player.rating))
+        
         if player.rating then
             AddPlayerToWhitelist(player.name, player.rating, player.role, dungeonInfo)
             savedCount = savedCount + 1

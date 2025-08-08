@@ -4,10 +4,10 @@
 -- Función principal para obtener información de la dungeon actual
 function GetCurrentDungeonInfo()
     -- Por ahora usamos la versión mock, pero mantenemos la real comentada
-    return GetMockDungeonInfo()
+    -- return GetMockDungeonInfo()
     
     -- Versión real (comentada para pruebas)
-    -- return GetRealDungeonInfo()
+    return GetRealDungeonInfo()
 end
 
 -- Obtener información real de la dungeon actual
@@ -34,13 +34,14 @@ function GetRealDungeonInfo()
         end
     end
     
-    -- Verificar si es una key de mythic+
-    if C_ChallengeMode and C_ChallengeMode.GetActiveKeystoneInfo then
-        local keystoneInfo = C_ChallengeMode.GetActiveKeystoneInfo()
-        if keystoneInfo then
+    -- Verificar si es una key de mythic+ usando la API moderna
+    if C_ChallengeMode then
+        -- API moderna: GetActiveKeystoneInfo() devuelve un número (el nivel) o nil
+        local keyLevel = C_ChallengeMode.GetActiveKeystoneInfo()
+        if keyLevel and keyLevel > 0 then
             dungeonInfo.isKey = true
-            dungeonInfo.keyLevel = keystoneInfo.level or 0
-            dungeonInfo.difficulty = "Mythic+ " .. (keystoneInfo.level or 0)
+            dungeonInfo.keyLevel = keyLevel
+            dungeonInfo.difficulty = "Mythic+ " .. keyLevel
         end
     end
     

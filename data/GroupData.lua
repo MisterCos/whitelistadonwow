@@ -29,9 +29,15 @@ function GetRealGroupPlayers()
             end
         end
         
+        -- Mapear roles de WoW a nuestros roles
+        local mappedRole = string.lower(playerRole or "dps")
+        if mappedRole == "damager" then
+            mappedRole = "dps"
+        end
+        
         table.insert(players, {
             name = playerName,
-            role = string.lower(playerRole or "dps"),
+            role = mappedRole,
             class = playerClass
         })
         return players
@@ -50,9 +56,15 @@ function GetRealGroupPlayers()
         local class = select(2, UnitClass(unit))
         
         if name and role and role ~= "NONE" then
+            -- Mapear roles de WoW a nuestros roles
+            local mappedRole = string.lower(role)
+            if mappedRole == "damager" then
+                mappedRole = "dps"
+            end
+            
             table.insert(players, {
                 name = name,
-                role = string.lower(role),
+                role = mappedRole,
                 class = class
             })
         end

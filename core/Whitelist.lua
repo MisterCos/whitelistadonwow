@@ -2,6 +2,12 @@
 
 -- TODO: we have to add the rest of the information to the whitelist
 function AddPlayerToWhitelist(playerName, note, role, dungeonInfo)
+    print("DEBUG: AddPlayerToWhitelist called with:")
+    print("  Player: " .. tostring(playerName))
+    print("  Note: " .. tostring(note))
+    print("  Role: " .. tostring(role))
+    print("  DungeonInfo: " .. tostring(dungeonInfo and dungeonInfo.name or "nil"))
+    
    -- Inicializar jugador si no existe
    if not WhiteListDB[playerName] then
         WhiteListDB[playerName] = { dps = {}, healer = {}, tank = {} }
@@ -9,6 +15,13 @@ function AddPlayerToWhitelist(playerName, note, role, dungeonInfo)
 
     -- Normalizar el rol a minúsculas
     role = string.lower(role)
+    print("DEBUG: Normalized role: " .. role)
+
+    -- Mapear roles de WoW a nuestros roles
+    if role == "damager" then
+        role = "dps"
+        print("DEBUG: Mapped 'damager' to 'dps'")
+    end
 
     -- Validar rol
     if not WhiteListDB[playerName][role] then
