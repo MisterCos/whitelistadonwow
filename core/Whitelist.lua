@@ -12,7 +12,7 @@ function AddPlayerToWhitelist(playerName,note,role)
 
     -- Validar rol
     if not WhiteListDB[playerName][role] then
-        print("Rol inválido: "..role)
+                        print("Invalid role: "..role)
         return
     end
 
@@ -30,7 +30,7 @@ function AddPlayerToWhitelist(playerName,note,role)
         return a.date > b.date -- Orden descendente (más reciente primero)
     end)
 
-    print("Encuentro añadido para "..playerName.." - Rol: "..role.." Nota: "..note)
+            print("Encounter added for "..playerName.." - Role: "..role.." Rating: "..note)
 end
 
 
@@ -41,11 +41,11 @@ end
 
 function printWhiteList()
     for playerName, roles in pairs(WhiteListDB) do
-        print("Jugador: "..playerName)
+        print("Player: "..playerName)
         for role, encounters in pairs(roles) do
-            print("  Rol: "..role)
+            print("  Role: "..role)
             for i, encounter in ipairs(encounters) do
-                print(string.format("    %d - Fecha: %s, Nota: %d",
+                print(string.format("    %d - Date: %s, Rating: %d",
                     i, encounter.date, encounter.note))
             end
         end

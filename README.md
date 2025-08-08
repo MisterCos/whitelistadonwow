@@ -1,90 +1,90 @@
-# MyFirstAddon - Sistema de Calificación de Jugadores para WoW
+# MyFirstAddon - Player Rating System for WoW
 
-Un addon para World of Warcraft que permite calificar y hacer seguimiento del rendimiento de jugadores en dungeons.
+A World of Warcraft addon that allows you to rate and track player performance in dungeons.
 
-## 🎯 Características
+## 🎯 Features
 
-- **Interfaz de calificación** al final de dungeons
-- **Iconos de clase** con colores oficiales de WoW
-- **Iconos de rol** (Tank, Healer, DPS) con iconos oficiales
-- **Sistema de calificación** del 1 al 10
-- **Almacenamiento persistente** de calificaciones
-- **Comandos slash** para gestión de la whitelist
-- **Arquitectura modular** organizada en carpetas
+- **Rating interface** at the end of dungeons
+- **Class icons** with official WoW colors
+- **Role icons** (Tank, Healer, DPS) with official icons
+- **Rating system** from 1 to 10
+- **Persistent storage** of ratings
+- **Slash commands** for whitelist management
+- **Modular architecture** organized in folders
 
-## 📦 Instalación
+## 📦 Installation
 
-1. Descarga el addon desde [GitHub](https://github.com/MisterCos/whitelistadonwow)
-2. Extrae la carpeta `MyFirstAddon` en tu directorio de addons:
+1. Download the addon from [GitHub](https://github.com/MisterCos/whitelistadonwow)
+2. Extract the `MyFirstAddon` folder to your addons directory:
    ```
    World of Warcraft/_retail_/Interface/AddOns/MyFirstAddon/
    ```
-3. Reinicia WoW o ejecuta `/reload`
+3. Restart WoW or run `/reload`
 
-## 🚀 Uso
+## 🚀 Usage
 
-### Interfaz de Calificación
-- **Botón de prueba**: "Simular Fin Dungeon" (temporal para testing)
-- **Modal de calificación**: Aparece con la lista de jugadores del grupo
-- **Calificación**: Dropdown del 1 al 10 para cada jugador
-- **Guardar**: Botón para guardar las calificaciones
+### Rating Interface
+- **Test button**: "Simulate Dungeon End" (temporary for testing)
+- **Rating modal**: Shows the list of group players
+- **Rating**: Dropdown from 1 to 10 for each player
+- **Save**: Button to save the ratings
 
-### Comandos Slash
+### Slash Commands
 
-| Comando | Descripción | Ejemplo |
+| Command | Description | Example |
 |---------|-------------|---------|
-| `/adduser` | Añadir jugador a la whitelist | `/adduser NombreJugador 8 tank` |
-| `/showstats` | Mostrar estadísticas de un jugador | `/showstats NombreJugador tank` |
-| `/printwhitelist` | Mostrar toda la whitelist | `/printwhitelist` |
-| `/removewhitelist` | Eliminar toda la whitelist | `/removewhitelist` |
+| `/adduser` | Add player to whitelist | `/adduser PlayerName 8 tank` |
+| `/showstats` | Show player statistics | `/showstats PlayerName tank` |
+| `/printwhitelist` | Show entire whitelist | `/printwhitelist` |
+| `/removewhitelist` | Remove entire whitelist | `/removewhitelist` |
 
-## 🏗️ Arquitectura
+## 🏗️ Architecture
 
 ```
 MyFirstAddon/
-├── MyFirstAddon.toc          # Configuración del addon
-├── core/                     # Lógica principal
-│   ├── Main.lua             # Punto de entrada
-│   ├── Commands.lua         # Comandos slash
-│   ├── Whitelist.lua        # Gestión de datos
-│   └── ClassColors.lua      # Colores e iconos
-├── data/                    # Manejo de datos
-│   └── GroupData.lua        # Datos del grupo
-└── ui/                      # Interfaz de usuario
-    └── UI.lua               # Interfaz de calificación
+├── MyFirstAddon.toc          # Addon configuration
+├── core/                     # Main logic
+│   ├── Main.lua             # Entry point
+│   ├── Commands.lua         # Slash commands
+│   ├── Whitelist.lua        # Data management
+│   └── ClassColors.lua      # Colors and icons
+├── data/                    # Data handling
+│   └── GroupData.lua        # Group data
+└── ui/                      # User interface
+    └── UI.lua               # Rating interface
 ```
 
-## 🎨 Características Visuales
+## 🎨 Visual Features
 
-### Iconos de Clase
-- **Colores oficiales** de WoW para cada clase
-- **Iconos de clase** en la lista de jugadores
-- **Nombres coloreados** según la clase
+### Class Icons
+- **Official WoW colors** for each class
+- **Class icons** in the player list
+- **Colored names** according to class
 
-### Iconos de Rol
-- **Tank**: Escudo oficial de WoW
-- **Healer**: Cruz médica oficial
-- **DPS**: Espada oficial
-- **Alta resolución** usando texturas oficiales
+### Role Icons
+- **Tank**: Official WoW shield
+- **Healer**: Official medical cross
+- **DPS**: Official sword
+- **High resolution** using official textures
 
-## 💾 Almacenamiento de Datos
+## 💾 Data Storage
 
-El addon utiliza `SavedVariables` para guardar:
-- Calificaciones por jugador
-- Rol específico (tank/healer/dps)
-- Fecha y hora de cada encuentro
-- Promedios y estadísticas
+The addon uses `SavedVariables` to store:
+- Ratings per player
+- Specific role (tank/healer/dps)
+- Date and time of each encounter
+- Averages and statistics
 
-## 🔧 Configuración
+## 🔧 Configuration
 
-### Versiones Soportadas
-- **WoW Retail**: 11.2 (TWW) y superiores
+### Supported Versions
+- **WoW Retail**: 11.2 (TWW) and above
 - **Interface**: 110107, 110200, 110205
 
-### Variables Guardadas
+### Saved Variables
 ```lua
 WhiteListDB = {
-    ["NombreJugador"] = {
+    ["PlayerName"] = {
         tank = {{date = "08/08/2024 17:30:00", note = "8"}},
         healer = {{date = "08/08/2024 17:30:00", note = "7"}},
         dps = {{date = "08/08/2024 17:30:00", note = "9"}}
@@ -92,54 +92,54 @@ WhiteListDB = {
 }
 ```
 
-## 🐛 Solución de Problemas
+## 🐛 Troubleshooting
 
-### El addon no aparece
-- Verifica que esté en la carpeta correcta
-- Ejecuta `/reload` en WoW
-- Comprueba que no haya errores en el chat
+### The addon doesn't appear
+- Verify it's in the correct folder
+- Run `/reload` in WoW
+- Check for errors in chat
 
-### Los iconos no se ven
-- Asegúrate de estar en WoW 11.2+
-- Los iconos usan texturas oficiales de WoW
+### Icons don't show
+- Make sure you're on WoW 11.2+
+- Icons use official WoW textures
 
-### No se guardan las calificaciones
-- Verifica que tengas permisos de escritura
-- Comprueba que `SavedVariables` esté habilitado
+### Ratings don't save
+- Verify you have write permissions
+- Check that `SavedVariables` is enabled
 
-## 🔮 Próximas Características
+## 🔮 Upcoming Features
 
-- [ ] Detección automática del fin de dungeon
-- [ ] Estadísticas avanzadas y gráficos
-- [ ] Filtros y búsqueda en la whitelist
-- [ ] Exportar/importar datos
-- [ ] Notificaciones de jugadores conocidos
-- [ ] Interfaz de configuración
+- [ ] Automatic dungeon end detection
+- [ ] Advanced statistics and graphs
+- [ ] Filters and search in whitelist
+- [ ] Export/import data
+- [ ] Notifications for known players
+- [ ] Configuration interface
 
-## 🤝 Contribuciones
+## 🤝 Contributing
 
-¡Las contribuciones son bienvenidas! Por favor:
+Contributions are welcome! Please:
 
-1. Fork el repositorio
-2. Crea una rama para tu feature
-3. Commit tus cambios
-4. Push a la rama
-5. Abre un Pull Request
+1. Fork the repository
+2. Create a branch for your feature
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+This project is under the MIT License. See the `LICENSE` file for more details.
 
-## 👨‍💻 Autor
+## 👨‍💻 Author
 
 **MisterCos** - [GitHub](https://github.com/MisterCos)
 
-## 🙏 Agradecimientos
+## 🙏 Acknowledgments
 
-- Blizzard Entertainment por la API de WoW
-- Comunidad de desarrolladores de addons de WoW
-- Todos los que han probado y dado feedback del addon
+- Blizzard Entertainment for the WoW API
+- WoW addon developer community
+- Everyone who has tested and provided feedback for the addon
 
 ---
 
-**¡Disfruta trackeando el rendimiento de tus compañeros de dungeon!** 🎮⚔️
+**Enjoy tracking your dungeon companions' performance!** 🎮⚔️

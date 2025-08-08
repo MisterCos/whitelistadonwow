@@ -10,7 +10,7 @@ function InitializeDungeonRatingUI()
     local testButton = CreateFrame("Button", "TestDungeonEndButton", UIParent, "UIPanelButtonTemplate")
     testButton:SetSize(150, 30)
     testButton:SetPoint("TOPLEFT", 10, -10)
-    testButton:SetText("Simular Fin Dungeon")
+    testButton:SetText("Simulate Dungeon End")
     testButton:SetScript("OnClick", function()
         ShowDungeonRatingFrame()
     end)
@@ -59,7 +59,7 @@ function CreateMainFrame()
     -- Título
     local title = mainFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     title:SetPoint("TOP", 0, -15)
-    title:SetText("Calificar Jugadores")
+    title:SetText("Rate Players")
     
     -- Botón de cerrar
     local closeButton = CreateFrame("Button", nil, mainFrame, "UIPanelCloseButton")
@@ -72,7 +72,7 @@ function CreateMainFrame()
     local saveButton = CreateFrame("Button", nil, mainFrame, "UIPanelButtonTemplate")
     saveButton:SetSize(120, 25)
     saveButton:SetPoint("BOTTOM", -60, 15)
-    saveButton:SetText("Guardar Calificaciones")
+    saveButton:SetText("Save Ratings")
     saveButton:SetScript("OnClick", function()
         SaveRatings()
     end)
@@ -156,7 +156,7 @@ function CreatePlayerFrames()
         
         -- Icono de rol
         local roleIcon = frame:CreateTexture(nil, "OVERLAY")
-        roleIcon:SetSize(24, 24)
+        roleIcon:SetSize(20, 20)
         roleIcon:SetPoint("LEFT", 150, 0)
         
         -- Asignar icono según el rol (usando coordenadas optimizadas del sprite sheet)
@@ -219,9 +219,9 @@ function SaveRatings()
     end
     
     if savedCount > 0 then
-        print("Calificaciones guardadas para " .. savedCount .. " jugadores.")
+        print("Ratings saved for " .. savedCount .. " players.")
     else
-        print("No se guardaron calificaciones.")
+        print("No ratings were saved.")
     end
     
     HideRatingFrame()
