@@ -1,0 +1,16 @@
+## Interface: 110107, 110200, 110205
+## Title: My First Addon TWW
+## Notes: Addon de prueba para TWW
+## SavedVariables: WhiteListDB
+
+# Core - Lógica principal del addon
+core/Main.lua
+core/Whitelist.lua
+core/Commands.lua
+core/ClassColors.lua
+
+# Data - Manejo de datos del grupo
+data/GroupData.lua
+
+# UI - Interfaz gráfica
+ui/UI.lua
