@@ -39,7 +39,7 @@ end
 function CreateMainFrame()
     -- Frame principal
     mainFrame = CreateFrame("Frame", "DungeonRatingFrame", UIParent, "BackdropTemplate")
-    mainFrame:SetSize(400, 500)
+    mainFrame:SetSize(350, 320)
     mainFrame:SetPoint("CENTER")
     mainFrame:SetBackdrop({
         bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
@@ -81,22 +81,18 @@ function CreateMainFrame()
     local cancelButton = CreateFrame("Button", nil, mainFrame, "UIPanelButtonTemplate")
     cancelButton:SetSize(80, 25)
     cancelButton:SetPoint("BOTTOM", 60, 15)
-    cancelButton:SetText("Cancelar")
+    cancelButton:SetText("Cancel")
     cancelButton:SetScript("OnClick", function()
         HideRatingFrame()
     end)
     
-    -- Frame para la lista de jugadores
-    local scrollFrame = CreateFrame("ScrollFrame", nil, mainFrame, "UIPanelScrollFrameTemplate")
-    scrollFrame:SetSize(350, 350)
-    scrollFrame:SetPoint("TOP", 0, -50)
-    
-    local scrollChild = CreateFrame("Frame", nil, scrollFrame)
-    scrollChild:SetSize(330, 350)
-    scrollFrame:SetScrollChild(scrollChild)
+    -- Frame para la lista de jugadores (sin scroll)
+    local playerContainer = CreateFrame("Frame", nil, mainFrame)
+    playerContainer:SetSize(330, 220)
+    playerContainer:SetPoint("TOP", 0, -50)
     
     -- Guardar referencias
-    mainFrame.scrollChild = scrollChild
+    mainFrame.playerContainer = playerContainer
     mainFrame.saveButton = saveButton
     mainFrame.cancelButton = cancelButton
     mainFrame.closeButton = closeButton
@@ -118,15 +114,15 @@ end
 function CreatePlayerFrames()
     ClearPlayerFrames()
     
-    if not mainFrame or not mainFrame.scrollChild then
+    if not mainFrame or not mainFrame.playerContainer then
         return
     end
     
-    local scrollChild = mainFrame.scrollChild
+    local playerContainer = mainFrame.playerContainer
     local yOffset = 0
     
     for i, player in ipairs(currentGroupPlayers) do
-        local frame = CreateFrame("Frame", "PlayerRatingFrame" .. i, scrollChild, "BackdropTemplate")
+        local frame = CreateFrame("Frame", "PlayerRatingFrame" .. i, playerContainer, "BackdropTemplate")
         frame:SetSize(320, 40)
         frame:SetPoint("TOPLEFT", 5, yOffset)
         
@@ -193,9 +189,6 @@ function CreatePlayerFrames()
         table.insert(playerFrames, frame)
         yOffset = yOffset - 45
     end
-    
-    -- Ajustar altura del scroll child
-    scrollChild:SetHeight(math.abs(yOffset) + 10)
 end
 
 -- Limpiar frames de jugadores
