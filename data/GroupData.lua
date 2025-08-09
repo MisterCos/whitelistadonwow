@@ -13,34 +13,11 @@ end
 -- Obtener jugadores reales del grupo actual
 function GetRealGroupPlayers()
     local players = {}
+    local currentPlayerName = UnitName("player")
     
-    -- Si estás solo
+    -- Si estás solo, no devolver ningún jugador (no puedes puntuarte a ti mismo)
     if not IsInGroup() then
-        local playerName = UnitName("player")
-        local playerRole = UnitGroupRolesAssigned("player")
-        local playerClass = select(2, UnitClass("player"))
-        
-        if playerRole == "NONE" then
-            -- Determinar rol por especialización
-            local spec = GetSpecialization()
-            if spec then
-                local _, _, _, _, role = GetSpecializationInfo(spec)
-                playerRole = role
-            end
-        end
-        
-        -- Mapear roles de WoW a nuestros roles
-        local mappedRole = string.lower(playerRole or "dps")
-        if mappedRole == "damager" then
-            mappedRole = "dps"
-        end
-        
-        table.insert(players, {
-            name = playerName,
-            role = mappedRole,
-            class = playerClass
-        })
-        return players
+        return players -- Lista vacía
     end
     
     -- Si estás en grupo
@@ -55,7 +32,8 @@ function GetRealGroupPlayers()
         local role = UnitGroupRolesAssigned(unit)
         local class = select(2, UnitClass(unit))
         
-        if name and role and role ~= "NONE" then
+        -- Excluir al jugador actual del listado
+        if name and role and role ~= "NONE" and name ~= currentPlayerName then
             -- Mapear roles de WoW a nuestros roles
             local mappedRole = string.lower(role)
             if mappedRole == "damager" then
@@ -75,13 +53,24 @@ end
 
 -- Obtener jugadores simulados para pruebas
 function GetMockGroupPlayers()
-    return {
+    local currentPlayerName = UnitName("player")
+    local mockPlayers = {
         {name = "Jugador1", role = "dps", class = "WARRIOR"},
         {name = "Jugador2", role = "healer", class = "PRIEST"},
         {name = "Jugador3", role = "tank", class = "DEATHKNIGHT"},
         {name = "Jugador4", role = "dps", class = "MAGE"},
         {name = "Jugador5", role = "dps", class = "ROGUE"}
     }
+    
+    -- Filtrar al jugador actual si aparece en la lista simulada
+    local filteredPlayers = {}
+    for _, player in ipairs(mockPlayers) do
+        if player.name ~= currentPlayerName then
+            table.insert(filteredPlayers, player)
+        end
+    end
+    
+    return filteredPlayers
 end
 
 -- Función auxiliar para obtener información del grupo
